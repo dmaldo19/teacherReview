@@ -17,14 +17,33 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        # Instalar dependencias condicionalmente si alguna versión no es compatible
+        if [[ ${{ matrix.python-version }} == '3.7' ]]; then
+          # Instalar versiones específicas para Python 3.7
+          pip install -r requirements_py37.txt
+        else
+          # Instalar dependencias estándar
+          pip install -r requirements.txt
+        fi
+
+    - name: Apply Migrations
+      run: |
+        python manage.py migrate
+
     - name: Run Tests
       run: |
         python manage.py test
+
+    - name: Collect Static Files (Optional)
+      
+      run: |
+        python manage.py collectstatic --noinput

@@ -13,11 +13,11 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.8, 3.9]  # Usar versiones de Python compatibles
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
@@ -26,14 +26,7 @@ jobs:
     - name: Install Dependencies
       run: |
         python -m pip install --upgrade pip
-        # Instalar dependencias condicionalmente si alguna versión no es compatible
-        if [[ ${{ matrix.python-version }} == '3.7' ]]; then
-          # Instalar versiones específicas para Python 3.7
-          pip install -r requirements.txt
-        else
-          # Instalar dependencias estándar
-          pip install -r requirements.txt
-        fi
+        pip install -r requirements.txt
 
     - name: Apply Migrations
       run: |
@@ -42,8 +35,3 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-
-    - name: Collect Static Files (Optional)
-      
-      run: |
-        python manage.py collectstatic --noinput

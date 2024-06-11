@@ -29,7 +29,7 @@ jobs:
         # Instalar dependencias condicionalmente si alguna versión no es compatible
         if [[ ${{ matrix.python-version }} == '3.7' ]]; then
           # Instalar versiones específicas para Python 3.7
-          pip install -r requirements_py37.txt
+          pip install -r requirements.txt
         else
           # Instalar dependencias estándar
           pip install -r requirements.txt

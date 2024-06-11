@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block titulo %}
+<title>Sobre {{ profesor.nombre }}</title>
+{% endblock titulo %}
+
+{% block content %}
+<section>
+    {%if user.is_authenticated%}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin: 10px;">
+        <a href="{% url 'usuario:logout' %}"  class="btn btn-danger">Cerrar Sesion</a>
+        <a href="{% url 'publicacion:crear_resena' %}" class="btn btn-success">Crear Reseña</a>
+    </div>
+    {%else%}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin: 10px;">
+        <a href="{% url 'usuario:registro' %}"  class="btn btn-warning">Registrarse</a>
+        <a href="{% url 'usuario:inicio' %}"  class="btn btn-success">Iniciar Sesion</a>
+    </div>
+    {%endif%}
+    <ul class="nav justify-content-end">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'publicacion:index' %}">Publicaciones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'profesor:profesores' %}">Profesores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'materia:materias' %}">Materias</a>
+        </li>
+    </ul>
+</section>
+<h1 style="margin-left: 5%;">Sobre {{ profesor.nombre }}</h1>
+
+<h2 style="margin-left: 5%;">Calificación General: {{ general_rating }}</h2>
+<br>
+<div style="display: flex; margin-left: 5%;">
+    {% for rubro, promedio in rubric_averages.items %}
+    <div style="margin-right: 20px; flex-grow: 1;">
+        <h6>{{ rubro }}: {{ promedio }}</h6>
+    </div>
+    {% endfor %}
+</div>
+
+<br>
+<h3 style="margin-left: 5%;">Reseñas</h3>
+{% for publicacion in publicacion_list %}
+<section>
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ publicacion.titulo }}</h5>
+                <p class="card-text">{{ publicacion.comentario }}</p>
+            </div>
+            <div class="card-footer text-body-secondary text-end">
+                Por {{ publicacion.usuario }}. {{ publicacion.fecha }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock content %}

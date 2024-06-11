@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block titulo %}
+<title>Profesores</title>
+{% endblock titulo %}
+
+{% block content %}
+<section>
+    {% if user.is_authenticated %}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin: 10px;">
+        <a href="{% url 'usuario:logout' %}" class="btn btn-danger">Cerrar Sesión</a>
+        <a href="{% url 'publicacion:crear_resena' %}" class="btn btn-success">Crear Reseña</a>
+    </div>
+    {% else %}
+    <div class="btn-group" role="group" aria-label="Basic mixed styles example" style="margin: 10px;">
+        <a href="{% url 'usuario:registro' %}" class="btn btn-warning">Registrarse</a>
+        <a href="{% url 'usuario:inicio' %}" class="btn btn-success">Iniciar Sesión</a>
+    </div>
+    {% endif %}
+    <ul class="nav justify-content-end">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid">
+                <form class="d-flex" role="search" method="get" action="{% url 'profesor:profesores' %}">
+                    <input class="form-control me-2" type="search" name="q" placeholder="Buscar" aria-label="Search" value="{{ request.GET.q }}">
+                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                </form>
+            </div>
+        </nav>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'publicacion:index' %}">Publicaciones</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesor:profesores' %}">Profesores</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'materia:materias' %}">Materias</a>
+        </li>
+    </ul>
+</section>
+{% for profesor in profesor_list %}
+<section>
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'publicacion:profesor' profesor.id%}" style="text-decoration: none; color: black;">{{ profesor.nombre }}</a></h5>
+            </div>
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock content %}

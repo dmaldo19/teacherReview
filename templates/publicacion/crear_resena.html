@@ -1,0 +1,66 @@
+<!-- templates/publicacion/crear_resena.html -->
+{% extends "base.html" %}
+
+{% block title %}
+<title>Crear Reseña</title>
+{% endblock title %}
+
+{% block content %}
+<section>
+    <div class="container">
+        <h1>Crear Reseña</h1>
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            Datos no válidos
+        </div>          
+        {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="profesor-id" class="form-label">Profesor</label>
+              {{ form.profesor }}
+            </div>
+            <div class="mb-3">
+              <label for="materia-id" class="form-label">Materia</label>
+              {{ form.materia }}
+            </div>
+            <div class="mb-3">
+              <label for="titulo-id" class="form-label">Título</label>
+              {{ form.titulo }}
+            </div>
+            <div class="mb-3">
+              <label for="fecha-id" class="form-label">Fecha</label>
+              {{ form.fecha }}
+            </div>
+            <div class="mb-3">
+              <label for="comentario-id" class="form-label">Comentario</label>
+              {{ form.comentario }}
+            </div>
+            <div class="mb-3">
+              <label for="dominio-id" class="form-label">Dominio</label>
+              {{ form.dominio }}
+            </div>
+            <div class="mb-3">
+              <label for="puntualidad-id" class="form-label">Puntualidad</label>
+              {{ form.puntualidad }}
+            </div>
+            <div class="mb-3">
+              <label for="asistencia-id" class="form-label">Asistencia</label>
+              {{ form.asistencia }}
+            </div>
+            <div class="mb-3">
+              <label for="dificultad-id" class="form-label">Dificultad</label>
+              {{ form.dificultad }}
+            </div>
+            <div class="mb-3">
+              <label for="seguimiento-id" class="form-label">Seguimiento</label>
+              {{ form.seguimiento }}
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+              <button type="submit" class="btn btn-primary">Enviar</button>
+              <button type="reset" class="btn btn-secondary">Reiniciar</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock content %}
